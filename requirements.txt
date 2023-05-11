@@ -4,4 +4,9 @@ umap-learn==0.5.3
 nltk==3.8.1
 urllib3==1.25.8
 beautifulsoup4==4.8.2
-
+pypdf2==3.0.1
+requests==2.30.0
+scikit-learn==0.22.1
+numpy==1.21.6
+matplotlib==3.5.2
+seaborn==0.12.2
