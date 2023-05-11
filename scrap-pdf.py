@@ -4,6 +4,7 @@ import arxiv
 import requests
 import io
 import PyPDF2
+from PyPDF2.errors import PdfReadError
 
 def find_professor_papers(url):
     with urllib.request.urlopen(url) as response:
@@ -33,10 +34,14 @@ def scrap_pdf(url, keyword, max_results):
     papers = list()
 
     for pdf_url in pdf_urls:
-        response = requests.get(pdf_url)
-        content = response.content
-        file = io.BytesIO(content)
-        pdf_reader = PyPDF2.PdfReader(file)
+        try:
+            response = requests.get(pdf_url)
+            content = response.content
+            file = io.BytesIO(content)
+            pdf_reader = PyPDF2.PdfReader(file)
+        except PdfReadError:
+            print(pdf_url)
+            continue
         page = pdf_reader.pages[0]  # Get the first page
         text = page.extract_text()
         papers.append(text)
